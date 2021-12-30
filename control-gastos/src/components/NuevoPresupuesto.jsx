@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Mensaje from './Mensaje';
 
 
-const NuevoPresupuesto = ( {presupuesto, setPresupuesto} ) => {
+const NuevoPresupuesto = ( {presupuesto, setPresupuesto, setIsValidPresupuesto} ) => {
 
     // Estado para el mensaje cuando el presupuesto no es valido o es menor a cero
     const [mensaje, setMensaje] = useState("")
@@ -11,11 +11,14 @@ const NuevoPresupuesto = ( {presupuesto, setPresupuesto} ) => {
     // Validar campo del preupuesto que no sea un string o monto menor a cero
     const handlePresupuesto = (e) => {
         e.preventDefault();
-        if(!Number(presupuesto) || Number(presupuesto) < 0){
+        if(!presupuesto || presupuesto < 0){
             setMensaje("No es un Presupuesto Valido")
-        }else{
-          console.log("El presupuesto es Valido")
+            return
         }
+
+        setMensaje("")
+        setIsValidPresupuesto(true);
+
     }
 
 
@@ -26,11 +29,11 @@ const NuevoPresupuesto = ( {presupuesto, setPresupuesto} ) => {
           <label>Definir Presupuesto</label>
           <input
               className="nuevo-presupuesto"
-              type="text"
+              type="number"
               placeholder="Añade tu Presupuesto"
               value={presupuesto}
               // creamos el evento (onChange) que lee el input el cual es un callback para actualizar el state
-              onChange={ e => setPresupuesto(e.target.value) }
+              onChange={ e => setPresupuesto(Number(e.target.value)) }
           />
         </div>
         <input type="submit" value="Añadir" />
