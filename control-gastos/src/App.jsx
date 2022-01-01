@@ -8,6 +8,14 @@ function App() {
   const [presupuesto, setPresupuesto] = useState(0)
   // Estado para mostar el componente donde se administra el presupuesto, en caso de que este sea valido
   const [isValidPresupuesto, setIsValidPresupuesto] = useState(false)
+  // Estado para la ventana modal
+  const [modal, setModal] = useState(false)
+
+
+  // funcion para mostar la ventana modal
+  const handleNuevoGasto = () => {
+    setModal(true)
+  }
 
   return (
     <div>
@@ -22,10 +30,13 @@ function App() {
         <div className="nuevo-gasto"> 
             <img 
               src={IconoNuevoGasto} 
-              alt="icono nuevo gasto" 
+              alt="icono nuevo gasto"
+              onClick={handleNuevoGasto} 
             />
         </div>
       )}
+
+      {modal && <p>Desde Modal</p>}
     </div>
   )
 
