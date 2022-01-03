@@ -11,11 +11,18 @@ function App() {
   const [isValidPresupuesto, setIsValidPresupuesto] = useState(false)
   // Estado para la ventana modal
   const [modal, setModal] = useState(false)
+  // Estado para animar el formulario que aparece en el Modal con una clase del CSS
+  const [animarModal, setAnimarModal] = useState(false)
 
 
   // funcion para mostar la ventana modal
   const handleNuevoGasto = () => {
     setModal(true)
+
+    // Animar el Modal
+    setTimeout(() => {
+      setAnimarModal(true)
+    }, 500);
   }
 
   return (
@@ -40,6 +47,8 @@ function App() {
       {modal && 
         <Modal 
           setModal={setModal}
+          animarModal={animarModal}
+          setAnimarModal={setAnimarModal}
         />}
     </div>
   )

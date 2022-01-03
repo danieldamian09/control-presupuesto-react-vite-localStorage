@@ -1,13 +1,20 @@
 import CerrarBtn from '../img/cerrar.svg'
 
-const Modal = ({setModal}) => {
+const Modal = ({setModal, animarModal, setAnimarModal}) => {
 
   const ocultarModal = () => {
-    setModal(false)
+    
+    setAnimarModal(false)
+    
+    // Cambiar el estado de la animacion del formulario del Modal 
+    setTimeout(() => {
+      setModal(false)
+    }, 500);
   }
 
   return (
     <div className="modal">
+
       <div className="cerrar-modal">
         <img 
           src={CerrarBtn} 
@@ -15,6 +22,12 @@ const Modal = ({setModal}) => {
           onClick={ocultarModal} 
         />
       </div>
+
+      {/* Agregar clases de Forma condicional */}
+      <form className={`formulario ${animarModal ? "animar": "cerrar"}`}>
+        <legend>Nuevo Gasto</legend>
+      </form>
+
     </div>
   )
 }
