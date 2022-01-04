@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Header from "./components/Header";
+// funcion para generar el id desde la carpeta de helpers
+import { generarID } from "./helpers";
 import IconoNuevoGasto from './img/nuevo-gasto.svg'
 import Modal from "./components/Modal";
 
@@ -14,7 +16,7 @@ function App() {
   // Estado para animar el formulario que aparece en el Modal con una clase del CSS
   const [animarModal, setAnimarModal] = useState(false)
   // Estado para guardar los gastos
-  const [gasto, setGasto] = useState([])
+  const [gastos, setGastos] = useState([])
 
 
   // funcion para mostar la ventana modal
@@ -30,7 +32,17 @@ function App() {
 
    // Funcion para guardar el gasto
     const guardarGasto = gasto => {
-    setGasto(gasto)
+    // Asigno el Id con la funcion que exporte
+    gasto.id = generarID()
+    setGastos([...gastos, gasto])
+
+    //! Ocultar el Modal una vez agregamos un gasto
+    setAnimarModal(false)
+    // Cambiar el estado de la animacion del formulario del Modal 
+    setTimeout(() => {
+      setModal(false)
+    }, 500);
+    
   }
 
   return (
