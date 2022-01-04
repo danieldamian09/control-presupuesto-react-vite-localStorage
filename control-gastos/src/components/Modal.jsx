@@ -1,8 +1,12 @@
 import { useState } from 'react'
-
 import CerrarBtn from '../img/cerrar.svg'
+// importo mi componente de mensaje
+import Mensaje from './Mensaje'
 
-const Modal = ({setModal, animarModal, setAnimarModal}) => {
+const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
+
+  // Estado para el mensaje de Error
+  const [mensaje, setMensaje] = useState('')
 
   // Estados para guardar la informacion de los campos del formulario
   const [nombre, setNombre] = useState('')
@@ -19,6 +23,36 @@ const Modal = ({setModal, animarModal, setAnimarModal}) => {
     }, 500);
   }
 
+  // Validaciones del Formulario al hacer Submit
+  const handleSubmit = e => {
+
+    e.preventDefault()
+
+    // Validacion
+    // console.log("Enviando.......")
+    if([nombre, cantidad, categoria].includes('')){
+      // console.log("Fallo la validacion....")
+      setMensaje('Todos los campos son obligatorios')
+
+      // *Esperamos unos segundos para quitar el mensaje de los campos
+      setTimeout(() => {
+        setMensaje('')
+      }, 3000)
+
+      return
+    }
+
+    // En caso de pasar la validacion guardo el gasto
+    guardarGasto({
+      nombre,
+      cantidad,
+      categoria
+    })
+
+  }
+
+  
+
   return (
     <div className="modal">
 
@@ -31,9 +65,16 @@ const Modal = ({setModal, animarModal, setAnimarModal}) => {
       </div>
 
       {/* Agregar clases de Forma condicional */}
-      <form className={`formulario ${animarModal ? "animar": "cerrar"}`}>
+      <form 
+        className={`formulario ${animarModal ? "animar": "cerrar"}`}
+        onSubmit={handleSubmit}
+        >
 
         <legend>Nuevo Gasto</legend>
+
+        {/* Mensaje de Error en caso de que los campos este vacios */}
+        {mensaje && <Mensaje tipo="error">{mensaje}</Mensaje>}
+
 
         <div className="campo">
           <label htmlFor="nombre">Nombre Gasto</label>

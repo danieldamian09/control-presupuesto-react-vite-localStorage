@@ -13,6 +13,8 @@ function App() {
   const [modal, setModal] = useState(false)
   // Estado para animar el formulario que aparece en el Modal con una clase del CSS
   const [animarModal, setAnimarModal] = useState(false)
+  // Estado para guardar los gastos
+  const [gasto, setGasto] = useState([])
 
 
   // funcion para mostar la ventana modal
@@ -23,6 +25,12 @@ function App() {
     setTimeout(() => {
       setAnimarModal(true)
     }, 500);
+  
+  }
+
+   // Funcion para guardar el gasto
+    const guardarGasto = gasto => {
+    setGasto(gasto)
   }
 
   return (
@@ -49,6 +57,7 @@ function App() {
           setModal={setModal}
           animarModal={animarModal}
           setAnimarModal={setAnimarModal}
+          guardarGasto={guardarGasto}
         />}
     </div>
   )
