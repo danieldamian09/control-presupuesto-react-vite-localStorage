@@ -1,6 +1,13 @@
+import { useState } from 'react'
+
 import CerrarBtn from '../img/cerrar.svg'
 
 const Modal = ({setModal, animarModal, setAnimarModal}) => {
+
+  // Estados para guardar la informacion de los campos del formulario
+  const [nombre, setNombre] = useState('')
+  const [cantidad, setCantidad] = useState('')
+  const [categoria, setCategoria] = useState('')
 
   const ocultarModal = () => {
     
@@ -34,6 +41,8 @@ const Modal = ({setModal, animarModal, setAnimarModal}) => {
             id='nombre'
             type="text"
             placeholder='Añade el Nombre del Gasto'
+            value={nombre}
+            onChange={ e => setNombre(e.target.value)}
           />
         </div>
 
@@ -43,6 +52,8 @@ const Modal = ({setModal, animarModal, setAnimarModal}) => {
             id='cantidad'
             type="number"
             placeholder='Añade la cantidad del Gasto: ej. 300'
+            value={cantidad}
+            onChange={e => setCantidad(Number(e.target.value))}
           />
         </div>
 
@@ -50,6 +61,8 @@ const Modal = ({setModal, animarModal, setAnimarModal}) => {
           <label htmlFor="categoria">Categoria</label>
           <select 
             id="categoria"
+            value={categoria}
+            onChange={e => setCategoria(e.target.value)}
           >
             <option value="">-- Selecciones --</option>
             <option value="ahorro">Ahorro</option>
