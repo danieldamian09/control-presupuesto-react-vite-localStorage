@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Header from "./components/Header";
+import ListadoGastos from "./components/ListadoGastos";
+import Modal from "./components/Modal";
 // funcion para generar el id desde la carpeta de helpers
 import { generarID } from "./helpers";
+// Icono de nuevos gastos
 import IconoNuevoGasto from './img/nuevo-gasto.svg'
-import Modal from "./components/Modal";
 
 function App() {
 
@@ -55,13 +57,20 @@ function App() {
       />
 
       {isValidPresupuesto && (
-        <div className="nuevo-gasto"> 
+        <>
+          <main>
+            <ListadoGastos 
+              gastos={gastos}
+            />
+          </main>
+          <div className="nuevo-gasto"> 
             <img 
               src={IconoNuevoGasto} 
               alt="icono nuevo gasto"
               onClick={handleNuevoGasto} 
             />
         </div>
+        </>
       )}
 
       {modal && 
