@@ -36,6 +36,8 @@ function App() {
     const guardarGasto = gasto => {
     // Asigno el Id con la funcion que exporte
     gasto.id = generarID()
+    // Guardar la fecha de cuando se creo el gasto
+    gasto.fecha = Date.now();
     setGastos([...gastos, gasto])
 
     //! Ocultar el Modal una vez agregamos un gasto
