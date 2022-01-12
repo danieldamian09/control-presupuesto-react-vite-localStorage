@@ -34,19 +34,27 @@ const Gasto = ({ gasto }) => {
   // Destructuring para sacar las variables que necesitamos del objeto gasto
   const { nombre, cantidad, categoria, id, fecha } = gasto;
 
-  const leadingActions = () => {
-    console.log("Editar.....")
-  }
+  const leadingActions = () => (
+      <LeadingActions>
+        <SwipeAction onClick={() => console.log("Editando")}>
+          Editar
+        </SwipeAction>
+      </LeadingActions>
+  )
 
-  const trailingActions = () => {
-    console.log("Eliminar.....")
-  }
+  const trailingActions = () => (
+    <TrailingActions>
+    <SwipeAction onClick={() => console.log("Eliminado")}>
+      Eliminar
+    </SwipeAction>
+  </TrailingActions>
+  )
 
   return (
     <SwipeableList>
       <SwipeableListItem
-          leadingActions={leadingActions}
-          trailingActions={trailingActions}
+          leadingActions={leadingActions()}
+          trailingActions={trailingActions()}
       >
       <div className="gasto sombra">
       <div className="contenido-gasto">
