@@ -26,7 +26,12 @@ function App() {
   useEffect(() => {
     if(Object.keys(gastoEditar).length){
       // console.log("Listo para Editar")
-      handleNuevoGasto()
+      setModal(true)
+      
+    // Animar el Modal
+    setTimeout(() => {
+      setAnimarModal(true)
+    }, 500);
     }
     
   }, [gastoEditar])
@@ -35,6 +40,8 @@ function App() {
   // funcion para mostar la ventana modal
   const handleNuevoGasto = () => {
     setModal(true)
+    setGastoEditar({})
+
 
     // Animar el Modal
     setTimeout(() => {
@@ -94,6 +101,7 @@ function App() {
           animarModal={animarModal}
           setAnimarModal={setAnimarModal}
           guardarGasto={guardarGasto}
+          gastoEditar={gastoEditar}
         />}
     </div>
   )

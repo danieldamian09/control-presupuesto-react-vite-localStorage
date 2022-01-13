@@ -1,9 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import CerrarBtn from '../img/cerrar.svg'
 // importo mi componente de mensaje
 import Mensaje from './Mensaje'
 
-const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
+const Modal = ({
+  setModal, 
+  animarModal, 
+  setAnimarModal, 
+  guardarGasto, 
+  gastoEditar
+}) => {
 
   // Estado para el mensaje de Error
   const [mensaje, setMensaje] = useState('')
@@ -12,6 +18,15 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
   const [nombre, setNombre] = useState('')
   const [cantidad, setCantidad] = useState('')
   const [categoria, setCategoria] = useState('')
+
+  useEffect(() => {
+    if(Object.keys(gastoEditar).length){
+      // console.log("Listo para Editar")
+      setNombre(gastoEditar.nombre)
+      setCantidad(gastoEditar.cantidad)
+      setCategoria(gastoEditar.categoria)
+    }
+  }, [])
 
   const ocultarModal = () => {
     
