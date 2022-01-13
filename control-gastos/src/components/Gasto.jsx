@@ -30,13 +30,13 @@ const diccionarioIconos = {
   suscripciones: IconoSuscripciones
 };
 
-const Gasto = ({ gasto }) => {
+const Gasto = ({ gasto, setGastoEditar }) => {
   // Destructuring para sacar las variables que necesitamos del objeto gasto
   const { nombre, cantidad, categoria, id, fecha } = gasto;
 
   const leadingActions = () => (
       <LeadingActions>
-        <SwipeAction onClick={() => console.log("Editando")}>
+        <SwipeAction onClick={() => setGastoEditar(gasto)}>
           Editar
         </SwipeAction>
       </LeadingActions>

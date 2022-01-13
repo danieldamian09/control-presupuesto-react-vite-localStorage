@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import ListadoGastos from "./components/ListadoGastos";
 import Modal from "./components/Modal";
@@ -19,6 +19,17 @@ function App() {
   const [animarModal, setAnimarModal] = useState(false)
   // Estado para guardar los gastos
   const [gastos, setGastos] = useState([])
+  // Estado para Editar el gasto que se va a cambiar y guardarlo en el Modal
+  const [gastoEditar, setGastoEditar] = useState({})
+
+  // Escuchar los cambios que sucedan cuando quiero editar un gasto
+  useEffect(() => {
+    if(Object.keys(gastoEditar).length){
+      // console.log("Listo para Editar")
+      handleNuevoGasto()
+    }
+    
+  }, [gastoEditar])
 
 
   // funcion para mostar la ventana modal
@@ -64,6 +75,7 @@ function App() {
           <main>
             <ListadoGastos 
               gastos={gastos}
+              setGastoEditar={setGastoEditar}
             />
           </main>
           <div className="nuevo-gasto"> 
