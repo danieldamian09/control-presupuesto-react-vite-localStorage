@@ -19,12 +19,20 @@ const Modal = ({
   const [cantidad, setCantidad] = useState('')
   const [categoria, setCategoria] = useState('')
 
+  // Estado para saber si estamos editando o crendo un nuevo registro
+  const [id, setId] = useState('')
+  // Estado para setear la fecha cuando esamos editando
+  const [fecha, setFecha] = useState('')
+
   useEffect(() => {
     if(Object.keys(gastoEditar).length){
       // console.log("Listo para Editar")
       setNombre(gastoEditar.nombre)
       setCantidad(gastoEditar.cantidad)
       setCategoria(gastoEditar.categoria)
+      // Para identificar si estamos editando
+      setId(gastoEditar.id);
+      setFecha(gastoEditar.fecha)
     }
   }, [])
 
@@ -61,7 +69,9 @@ const Modal = ({
     guardarGasto({
       nombre,
       cantidad,
-      categoria
+      categoria,
+      id,
+      fecha
     })
 
   }
@@ -85,7 +95,7 @@ const Modal = ({
         onSubmit={handleSubmit}
         >
 
-        <legend>Nuevo Gasto</legend>
+        <legend>{gastoEditar.nombre ? "Editar Gasto" : "Nuevo Gasto"}</legend>
 
         {/* Mensaje de Error en caso de que los campos este vacios */}
         {mensaje && <Mensaje tipo="error">{mensaje}</Mensaje>}
@@ -133,7 +143,7 @@ const Modal = ({
 
         <input 
           type="submit" 
-          value="Añadir Gasto" 
+          value={gastoEditar.nombre ? "Guardar Cambios": "Añadir Gasto"} 
         />
 
 

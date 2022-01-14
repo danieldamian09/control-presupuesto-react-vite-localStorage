@@ -5,67 +5,70 @@ import Modal from "./components/Modal";
 // funcion para generar el id desde la carpeta de helpers
 import { generarID } from "./helpers";
 // Icono de nuevos gastos
-import IconoNuevoGasto from './img/nuevo-gasto.svg'
+import IconoNuevoGasto from "./img/nuevo-gasto.svg";
 
 function App() {
-
   // Estado para manejar el monto del presupuesto en toda la aplicacion
-  const [presupuesto, setPresupuesto] = useState(0)
+  const [presupuesto, setPresupuesto] = useState(0);
   // Estado para mostar el componente donde se administra el presupuesto, en caso de que este sea valido
-  const [isValidPresupuesto, setIsValidPresupuesto] = useState(false)
+  const [isValidPresupuesto, setIsValidPresupuesto] = useState(false);
   // Estado para la ventana modal
-  const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState(false);
   // Estado para animar el formulario que aparece en el Modal con una clase del CSS
-  const [animarModal, setAnimarModal] = useState(false)
+  const [animarModal, setAnimarModal] = useState(false);
   // Estado para guardar los gastos
-  const [gastos, setGastos] = useState([])
+  const [gastos, setGastos] = useState([]);
   // Estado para Editar el gasto que se va a cambiar y guardarlo en el Modal
-  const [gastoEditar, setGastoEditar] = useState({})
+  const [gastoEditar, setGastoEditar] = useState({});
 
   // Escuchar los cambios que sucedan cuando quiero editar un gasto
   useEffect(() => {
-    if(Object.keys(gastoEditar).length){
+    if (Object.keys(gastoEditar).length) {
       // console.log("Listo para Editar")
-      setModal(true)
-      
-    // Animar el Modal
-    setTimeout(() => {
-      setAnimarModal(true)
-    }, 500);
-    }
-    
-  }, [gastoEditar])
+      setModal(true);
 
+      // Animar el Modal
+      setTimeout(() => {
+        setAnimarModal(true);
+      }, 500);
+    }
+  }, [gastoEditar]);
 
   // funcion para mostar la ventana modal
   const handleNuevoGasto = () => {
-    setModal(true)
-    setGastoEditar({})
-
+    setModal(true);
+    setGastoEditar({}); 
 
     // Animar el Modal
     setTimeout(() => {
-      setAnimarModal(true)
+      setAnimarModal(true);
     }, 500);
-  
-  }
+  };
 
-   // Funcion para guardar el gasto
-    const guardarGasto = gasto => {
-    // Asigno el Id con la funcion que exporte
-    gasto.id = generarID()
-    // Guardar la fecha de cuando se creo el gasto
-    gasto.fecha = Date.now();
-    setGastos([...gastos, gasto])
+  // Funcion para guardar el gasto
+  const guardarGasto = (gasto) => {
+    // ! Actualizar o agregar un nuevo gasto
+    if (gasto.id) {
+      //? Actualizar
+      const gastosActualizados = gastos.map( gastoState => gastoState.id === gasto.id ? gasto : gastoState)
+      setGastos(gastosActualizados);
+    } else {
+      //? Nuevo Gasto
+      // Asigno el Id con la funcion que exporte
+      gasto.id = generarID();
+      // Guardar la fecha de cuando se creo el gasto
+      gasto.fecha = Date.now();
+      setGastos([...gastos, gasto]);
+    }
 
     //! Ocultar el Modal una vez agregamos un gasto
-    setAnimarModal(false)
-    // Cambiar el estado de la animacion del formulario del Modal 
+    setAnimarModal(false);
+    // Cambiar el estado de la animacion del formulario del Modal
     setTimeout(() => {
-      setModal(false)
+      setModal(false);
     }, 500);
-    
-  }
+
+  };
 
   return (
     <div className={modal ? "fijar" : ""}>
@@ -80,32 +83,29 @@ function App() {
       {isValidPresupuesto && (
         <>
           <main>
-            <ListadoGastos 
-              gastos={gastos}
-              setGastoEditar={setGastoEditar}
-            />
+            <ListadoGastos gastos={gastos} setGastoEditar={setGastoEditar} />
           </main>
-          <div className="nuevo-gasto"> 
-            <img 
-              src={IconoNuevoGasto} 
+          <div className="nuevo-gasto">
+            <img
+              src={IconoNuevoGasto}
               alt="icono nuevo gasto"
-              onClick={handleNuevoGasto} 
+              onClick={handleNuevoGasto}
             />
-        </div>
+          </div>
         </>
       )}
 
-      {modal && 
-        <Modal 
+      {modal && (
+        <Modal
           setModal={setModal}
           animarModal={animarModal}
           setAnimarModal={setAnimarModal}
           guardarGasto={guardarGasto}
           gastoEditar={gastoEditar}
-        />}
+        />
+      )}
     </div>
-  )
-
+  );
 }
 
 export default App;
