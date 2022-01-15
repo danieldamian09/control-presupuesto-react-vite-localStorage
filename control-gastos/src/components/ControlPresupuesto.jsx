@@ -8,6 +8,8 @@ const ControlPresupuesto = ({presupuesto, gastos}) => {
 
   const [disponible, setDisponible] = useState(0)
   const [gastado, setGastado] = useState(0)
+  // Estado para el porcentaje de la grafica segun las operaciones que se van realizando
+  const [porcentaje, setPorcentaje] = useState(0)
 
 
   useEffect(() => {
@@ -15,7 +17,14 @@ const ControlPresupuesto = ({presupuesto, gastos}) => {
     const totalGastado = gastos.reduce( (total, gasto) => gasto.cantidad + total, 0);
     // console.log(totalGastado)
 
-    const totalDisponible = presupuesto - totalGastado
+    const totalDisponible = presupuesto - totalGastado;
+
+    //? Calcular el porcentaje gastado
+    const nuevoPorcentaje =  (((presupuesto - totalDisponible) / presupuesto) * 100).toFixed(2);
+    // Actualizamos el porcentaje en la grafica por medio del state (agrgamos un setTimeOut para poder ver la animacion)
+    setTimeout(() => {
+      setPorcentaje(nuevoPorcentaje)
+    }, 1500);
 
     setDisponible(totalDisponible)
     setGastado(totalGastado)
@@ -34,7 +43,7 @@ const ControlPresupuesto = ({presupuesto, gastos}) => {
 
       <div>
         <CircularProgressbar 
-            value={15}
+            value={porcentaje}
         />
       </div>
 
