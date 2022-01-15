@@ -9,7 +9,9 @@ import IconoNuevoGasto from "./img/nuevo-gasto.svg";
 
 function App() {
   // Estado para manejar el monto del presupuesto en toda la aplicacion
-  const [presupuesto, setPresupuesto] = useState(0);
+  const [presupuesto, setPresupuesto] = useState(
+    Number(localStorage.getItem('presupuesto')) ?? 0
+  );
   // Estado para mostar el componente donde se administra el presupuesto, en caso de que este sea valido
   const [isValidPresupuesto, setIsValidPresupuesto] = useState(false);
   // Estado para la ventana modal
@@ -33,6 +35,24 @@ function App() {
       }, 500);
     }
   }, [gastoEditar]);
+
+  //! Guardar en localStorage
+  useEffect(() => {
+    
+    localStorage.setItem('presupuesto', presupuesto ?? 0)
+    
+  }, [presupuesto])
+
+  //! No mostar el monto en la pantalla inicial cuando el valor que esta en localStorage es mayor a 0
+  useEffect(() => {
+    const presupuestoLS = Number(localStorage.getItem('presupuesto')) ?? 0;
+
+    if(presupuestoLS > 0){
+      setIsValidPresupuesto(true)
+    }
+
+  }, [])
+
 
   // funcion para mostar la ventana modal
   const handleNuevoGasto = () => {
