@@ -45,8 +45,8 @@ function App() {
     }, 500);
   };
 
-  // Funcion para guardar el gasto
-  const guardarGasto = (gasto) => {
+  //* Funcion para guardar el gasto
+  const guardarGasto = gasto => {
     // ! Actualizar o agregar un nuevo gasto
     if (gasto.id) {
       //? Actualizar
@@ -70,6 +70,13 @@ function App() {
 
   };
 
+  //* Funcion para eliminar el gasto
+  const eliminarGasto = id => {
+    const gastosActualizados = gastos.filter(gasto => gasto.id !== id)
+    // console.log(gastosActualizados)
+    setGastos(gastosActualizados)
+  }
+
   return (
     <div className={modal ? "fijar" : ""}>
       <Header
@@ -83,7 +90,11 @@ function App() {
       {isValidPresupuesto && (
         <>
           <main>
-            <ListadoGastos gastos={gastos} setGastoEditar={setGastoEditar} />
+            <ListadoGastos 
+              gastos={gastos} 
+              setGastoEditar={setGastoEditar}
+              eliminarGasto={eliminarGasto}
+            />
           </main>
           <div className="nuevo-gasto">
             <img

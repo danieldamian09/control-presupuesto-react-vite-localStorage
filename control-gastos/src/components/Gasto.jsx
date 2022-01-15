@@ -30,10 +30,12 @@ const diccionarioIconos = {
   suscripciones: IconoSuscripciones
 };
 
-const Gasto = ({ gasto, setGastoEditar }) => {
+// Componente
+const Gasto = ({ gasto, setGastoEditar, eliminarGasto }) => {
   // Destructuring para sacar las variables que necesitamos del objeto gasto
   const { nombre, cantidad, categoria, id, fecha } = gasto;
 
+  // Componentes para realizar la animacion Swipe(libreria)
   const leadingActions = () => (
       <LeadingActions>
         <SwipeAction onClick={() => setGastoEditar(gasto)}>
@@ -42,9 +44,13 @@ const Gasto = ({ gasto, setGastoEditar }) => {
       </LeadingActions>
   )
 
+  // ? destructive : ayuda a que la transicion al eliminar un gasto no sea tan brusca
   const trailingActions = () => (
     <TrailingActions>
-    <SwipeAction onClick={() => console.log("Eliminado")}>
+    <SwipeAction 
+        onClick={() => eliminarGasto(id)}
+        destructive={true}
+    >
       Eliminar
     </SwipeAction>
   </TrailingActions>
