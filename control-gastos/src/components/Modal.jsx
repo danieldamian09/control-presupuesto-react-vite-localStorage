@@ -8,7 +8,8 @@ const Modal = ({
   animarModal, 
   setAnimarModal, 
   guardarGasto, 
-  gastoEditar
+  gastoEditar,
+  setGastoEditar
 }) => {
 
   // Estado para el mensaje de Error
@@ -39,6 +40,8 @@ const Modal = ({
   const ocultarModal = () => {
     
     setAnimarModal(false)
+    // Limpiar el state
+    setGastoEditar({})
     
     // Cambiar el estado de la animacion del formulario del Modal 
     setTimeout(() => {

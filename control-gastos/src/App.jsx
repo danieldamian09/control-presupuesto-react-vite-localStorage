@@ -52,6 +52,8 @@ function App() {
       //? Actualizar
       const gastosActualizados = gastos.map( gastoState => gastoState.id === gasto.id ? gasto : gastoState)
       setGastos(gastosActualizados);
+      // Limpiar el state
+      setGastoEditar({})
     } else {
       //? Nuevo Gasto
       // Asigno el Id con la funcion que exporte
@@ -113,6 +115,7 @@ function App() {
           setAnimarModal={setAnimarModal}
           guardarGasto={guardarGasto}
           gastoEditar={gastoEditar}
+          setGastoEditar={setGastoEditar}
         />
       )}
     </div>
