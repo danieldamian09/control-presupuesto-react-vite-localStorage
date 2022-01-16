@@ -8,20 +8,32 @@ import { generarID } from "./helpers";
 import IconoNuevoGasto from "./img/nuevo-gasto.svg";
 
 function App() {
+
+  // Estado para guardar los gastos
+  //! "localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : []"  Obtener lo que esta en localStorage de gastos, en caso de no haber nada se coloca un array vacio
+  const [gastos, setGastos] = useState(
+    localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : []
+  );
+
   // Estado para manejar el monto del presupuesto en toda la aplicacion
+  // !"Number(localStorage.getItem('presupuesto')) ?? 0" para colocar en el estado lo que este en localStorage
   const [presupuesto, setPresupuesto] = useState(
     Number(localStorage.getItem('presupuesto')) ?? 0
   );
+
   // Estado para mostar el componente donde se administra el presupuesto, en caso de que este sea valido
   const [isValidPresupuesto, setIsValidPresupuesto] = useState(false);
+
   // Estado para la ventana modal
   const [modal, setModal] = useState(false);
+
   // Estado para animar el formulario que aparece en el Modal con una clase del CSS
   const [animarModal, setAnimarModal] = useState(false);
-  // Estado para guardar los gastos
-  const [gastos, setGastos] = useState([]);
+
   // Estado para Editar el gasto que se va a cambiar y guardarlo en el Modal
   const [gastoEditar, setGastoEditar] = useState({});
+
+
 
   // Escuchar los cambios que sucedan cuando quiero editar un gasto
   useEffect(() => {
@@ -36,14 +48,20 @@ function App() {
     }
   }, [gastoEditar]);
 
-  //! Guardar en localStorage
+  //! Guardar en localStorage el presupuesto
   useEffect(() => {
     
     localStorage.setItem('presupuesto', presupuesto ?? 0)
     
   }, [presupuesto])
 
-  //! No mostar el monto en la pantalla inicial cuando el valor que esta en localStorage es mayor a 0
+
+  //! Guardar en localStorage los gastos
+  useEffect(() => {
+    localStorage.setItem('gastos', JSON.stringify(gastos) ?? [])
+  }, [gastos])
+
+  //! No mostar el monto en la pantalla inicial cuando el valor que esta en localStorage es mayor a 0 (se ejecuta solo una vez)
   useEffect(() => {
     const presupuestoLS = Number(localStorage.getItem('presupuesto')) ?? 0;
 
