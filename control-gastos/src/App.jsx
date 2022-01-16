@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import ListadoGastos from "./components/ListadoGastos";
 import Modal from "./components/Modal";
+import Filtros from "./components/Filtros";
 // funcion para generar el id desde la carpeta de helpers
 import { generarID } from "./helpers";
 // Icono de nuevos gastos
@@ -10,13 +11,13 @@ import IconoNuevoGasto from "./img/nuevo-gasto.svg";
 function App() {
 
   // Estado para guardar los gastos
-  //! "localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : []"  Obtener lo que esta en localStorage de gastos, en caso de no haber nada se coloca un array vacio
+  //? "localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : []"  Obtener lo que esta en localStorage de gastos, en caso de no haber nada se coloca un array vacio
   const [gastos, setGastos] = useState(
     localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : []
   );
 
   // Estado para manejar el monto del presupuesto en toda la aplicacion
-  // !"Number(localStorage.getItem('presupuesto')) ?? 0" para colocar en el estado lo que este en localStorage
+  //? "Number(localStorage.getItem('presupuesto')) ?? 0" para colocar en el estado lo que este en localStorage
   const [presupuesto, setPresupuesto] = useState(
     Number(localStorage.getItem('presupuesto')) ?? 0
   );
@@ -33,9 +34,11 @@ function App() {
   // Estado para Editar el gasto que se va a cambiar y guardarlo en el Modal
   const [gastoEditar, setGastoEditar] = useState({});
 
+  // Estado para filtar los gastos
+  const [filtro, setFiltro] = useState('') 
 
 
-  // Escuchar los cambios que sucedan cuando quiero editar un gasto
+  //! useEffect  Escuchar los cambios que sucedan cuando quiero editar un gasto
   useEffect(() => {
     if (Object.keys(gastoEditar).length) {
       // console.log("Listo para Editar")
@@ -48,7 +51,7 @@ function App() {
     }
   }, [gastoEditar]);
 
-  //! Guardar en localStorage el presupuesto
+  //! useEffect Guardar en localStorage el presupuesto
   useEffect(() => {
     
     localStorage.setItem('presupuesto', presupuesto ?? 0)
@@ -56,12 +59,13 @@ function App() {
   }, [presupuesto])
 
 
-  //! Guardar en localStorage los gastos
+  //! useEffectGuardar en localStorage los gastos
   useEffect(() => {
     localStorage.setItem('gastos', JSON.stringify(gastos) ?? [])
   }, [gastos])
 
-  //! No mostar el monto en la pantalla inicial cuando el valor que esta en localStorage es mayor a 0 (se ejecuta solo una vez)
+
+  //! useEffect No mostar el monto en la pantalla inicial cuando el valor que esta en localStorage es mayor a 0 (se ejecuta solo una vez)
   useEffect(() => {
     const presupuestoLS = Number(localStorage.getItem('presupuesto')) ?? 0;
 
@@ -71,8 +75,17 @@ function App() {
 
   }, [])
 
+  //! useEffect Escuchar los cambios que sucedan en filtro
+  useEffect(() => {
+    if(filtro){
+      //? Filtrar gastos por categoria
+      
+    }
+  }, [filtro])
+  
 
-  // funcion para mostar la ventana modal
+
+  //* funcion para mostar la ventana modal
   const handleNuevoGasto = () => {
     setModal(true);
     setGastoEditar({}); 
@@ -101,7 +114,7 @@ function App() {
       setGastos([...gastos, gasto]);
     }
 
-    //! Ocultar el Modal una vez agregamos un gasto
+    //* Ocultar el Modal una vez agregamos un gasto
     setAnimarModal(false);
     // Cambiar el estado de la animacion del formulario del Modal
     setTimeout(() => {
@@ -130,6 +143,10 @@ function App() {
       {isValidPresupuesto && (
         <>
           <main>
+            <Filtros 
+              filtro={filtro}
+              setFiltro={setFiltro}
+            />
             <ListadoGastos 
               gastos={gastos} 
               setGastoEditar={setGastoEditar}
