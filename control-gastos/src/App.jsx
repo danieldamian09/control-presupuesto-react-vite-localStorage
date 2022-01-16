@@ -37,6 +37,9 @@ function App() {
   // Estado para filtar los gastos
   const [filtro, setFiltro] = useState('') 
 
+  // Estado solo para mostrar los gastos filtrados
+  const [gastosFiltrados, setGastosFiltrados] = useState([])
+
 
   //! useEffect  Escuchar los cambios que sucedan cuando quiero editar un gasto
   useEffect(() => {
@@ -79,7 +82,9 @@ function App() {
   useEffect(() => {
     if(filtro){
       //? Filtrar gastos por categoria
-      
+      const gastosFiltrados = gastos.filter( gasto => gasto.categoria === filtro)
+
+      setGastosFiltrados(gastosFiltrados)
     }
   }, [filtro])
   
